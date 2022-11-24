@@ -28,7 +28,7 @@
 import Foundation
 import UIKit
 
-protocol InputTextCustomViewDelegate: AnyObject {
+public protocol InputTextCustomViewDelegate: AnyObject {
     
     func willPerformPaste()
 }
