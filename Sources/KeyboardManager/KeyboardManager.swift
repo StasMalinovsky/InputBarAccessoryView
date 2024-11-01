@@ -159,7 +159,7 @@ open class KeyboardManager: NSObject, UIGestureRecognizerDelegate {
     /// - Parameter inputAccessoryView: The view to bind to the top of the keyboard but within its superview
     /// - Returns: Self
 @discardableResult
-open func bind(inputAccessoryView: UIView, withAdditionalBottomSpace additionalBottomSpace: (() -> CGFloat)? = .none) -> Self {
+open func bind(inputAccessoryView: UIView, insets: UIEdgeInsets = .zero, withAdditionalBottomSpace additionalBottomSpace: (() -> CGFloat)? = .none) -> Self {
 
     guard let superview = inputAccessoryView.superview else {
         fatalError("`inputAccessoryView` must have a superview")
@@ -169,8 +169,8 @@ open func bind(inputAccessoryView: UIView, withAdditionalBottomSpace additionalB
     inputAccessoryView.translatesAutoresizingMaskIntoConstraints = false
     constraints = NSLayoutConstraintSet(
         bottom: inputAccessoryView.bottomAnchor.constraint(equalTo: superview.bottomAnchor, constant: additionalInputViewBottomConstraintConstant()),
-        left: inputAccessoryView.leftAnchor.constraint(equalTo: superview.leftAnchor),
-        right: inputAccessoryView.rightAnchor.constraint(equalTo: superview.rightAnchor)
+        left: inputAccessoryView.leftAnchor.constraint(equalTo: superview.leftAnchor, constant: insets.left),
+        right: inputAccessoryView.rightAnchor.constraint(equalTo: superview.rightAnchor, constant: -insets.right)
     ).activate()
 
     callbacks[.willShow] = { [weak self] (notification) in
